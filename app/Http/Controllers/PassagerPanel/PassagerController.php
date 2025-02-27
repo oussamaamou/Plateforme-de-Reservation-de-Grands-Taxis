@@ -22,4 +22,8 @@ class PassagerController extends Controller
         
         return view('dashboard');
     }
+
+    public function mesReservations(){
+        return view('passager.mesreservations');
+    }
 }
