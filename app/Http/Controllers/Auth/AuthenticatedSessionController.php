@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
         elseif($request->user()->role === 'Passager'){
 
-            return redirect()->route('passager.dashboard');
+            return redirect()->route('dashboard');
         }
 
         return redirect()->intended(RouteServiceProvider::HOME);
