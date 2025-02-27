@@ -40,13 +40,15 @@ Route::middleware(['auth', 'role:Administrateur'])->group(function () {
 Route::middleware(['auth', 'role:Chauffeur'])->group(function () {
     
     Route::get('chauffeur/dashboard', [ChauffeurController::class, 'index'])->name('chauffeur.dashboard');
+    Route::get('chauffeur/reservations', [ChauffeurController::class, 'reservations'])->name('chauffeur.reservations');
 
 });
 
 
 Route::middleware(['auth', 'role:Passager'])->group(function () {
     
-    Route::get('passager/dashboard', [PassagerController::class, 'index'])->name('passager.dashboard');
+    Route::get('passager/mesreservations', [PassagerController::class, 'mesReservations'])->name('passager.mesreservations');
+    Route::get('/dashboard', [ChauffeurController::class, 'getAllChauffeur'])->name('dashboard');
 
 });
 
