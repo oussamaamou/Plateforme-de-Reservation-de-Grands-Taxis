@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminPanel\AdminController;
 use App\Http\Controllers\ChauffeurPanel\ChauffeurController;
 use App\Http\Controllers\PassagerPanel\PassagerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrajetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:Administrateur'])->group(function () {
 
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('admin/userslistes', [AdminController::class, 'getAllUsers'])->name('admin.listes');
 
 });
 
@@ -41,14 +43,18 @@ Route::middleware(['auth', 'role:Chauffeur'])->group(function () {
     
     Route::get('chauffeur/dashboard', [ChauffeurController::class, 'index'])->name('chauffeur.dashboard');
     Route::get('chauffeur/reservations', [ChauffeurController::class, 'reservations'])->name('chauffeur.reservations');
+    Route::get('chauffeur/reservations', [TrajetController::class, 'getAllReservations'])->name('chauffeur.reservations');
 
 });
 
 
 Route::middleware(['auth', 'role:Passager'])->group(function () {
     
-    Route::get('passager/mesreservations', [PassagerController::class, 'mesReservations'])->name('passager.mesreservations');
+    Route::post('/dashboard', [TrajetController::class, 'create'])->name('create.reservation');
     Route::get('/dashboard', [ChauffeurController::class, 'getAllChauffeur'])->name('dashboard');
+    Route::get('passager/mesreservations', [PassagerController::class, 'mesReservations'])->name('passager.mesreservations');
+    Route::get('passager/mesreservations', [TrajetController::class, 'getMyReservation'])->name('passager.mesreservations');
+    Route::get('passager/detailsReservation/{reservation}', [PassagerController::class, 'detailsReservation'])->name('passager.details');
 
 });
 
