@@ -11,18 +11,18 @@
 <body class="flex bg-gray-100 min-h-screen">
     <aside class="hidden sm:flex sm:flex-col">
 
-                <a href="" class="flex items-center">
-                    <img src="https://static.vecteezy.com/system/resources/previews/038/821/574/non_2x/flat-taxi-logo-isolated-on-white-background-car-face-icon-silhouette-auto-logo-template-taxi-service-brand-design-vector.jpg" class="w-[5rem]" alt="Site Web Logo" />
-                </a>
+        <a href="" class="flex items-center">
+            <img src="https://static.vecteezy.com/system/resources/previews/038/821/574/non_2x/flat-taxi-logo-isolated-on-white-background-car-face-icon-silhouette-auto-logo-template-taxi-service-brand-design-vector.jpg" class="w-[5rem]" alt="Site Web Logo" />
+        </a>
         <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
             <nav class="flex flex-col mx-4 my-6 space-y-4">
-                <a href="#" class="inline-flex items-center justify-center py-3 text-yellow-600 bg-white rounded-lg">
+                <a href="{{route('admin.dashboard')}}" class="inline-flex items-center justify-center py-3 text-yellow-600 bg-white rounded-lg">
 
                     <span class="sr-only">Dashboard</span>
                     <i class="fas fa-chart-line text-xl"></i>
                 </a>
 
-                <a href="admin/users" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+                <a href="{{ route('admin.listes')}}" class="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
 
                     <span class="sr-only">Utilisateurs</span>
                     <i class="fas fa-users text-xl"></i>
@@ -86,7 +86,7 @@
                         <i class="fas fa-users text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">5</span>
+                        <span class="block text-2xl font-bold">{{ $totalUsers }}</span>
                         <span class="block text-gray-500">Utilisateurs</span>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                         <i class="fas fa-car text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">3</span>
+                        <span class="block text-2xl font-bold">{{ $totalChauffeurs }}</span>
                         <span class="block text-gray-500">Chauffeurs</span>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                         <i class="fas fa-user text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">8</span>
+                        <span class="block text-2xl font-bold">{{ $totalPassagers }}</span>
                         <span class="block text-gray-500">Passagers</span>
                     </div>
                 </div>
@@ -119,183 +119,67 @@
                         <i class="fas fa-box text-xl"></i>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">10</span>
+                        <span class="block text-2xl font-bold">{{ $totalTrajets }}</span>
                         <span class="block text-gray-500">Trajets</span>
                     </div>
                 </div>
             </section>
 
-            <section class="grid md:grid-cols-2 xl:grid-cols-2 gap-6">
-                <!-- Statistiques des Colis -->
-                <div class="flex flex-col bg-white shadow rounded-lg">
-                    <div class="px-6 py-5 font-semibold border-b border-gray-100">Statistiques des Colis</div>
-                    <div class="p-4 flex-grow">
-                        <canvas id="colisChart" height="300"></canvas>
-                    </div>
-                </div>
-
-                <!-- Statistiques des Utilisateurs -->
-                <div class="flex flex-col bg-white shadow rounded-lg">
-                    <div class="px-6 py-5 font-semibold border-b border-gray-100">Statistiques des Utilisateurs</div>
-                    <div class="p-4 flex-grow">
-                        <canvas id="usersChart" height="300"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Liste des Conducteurs -->
-                <section class="bg-white shadow rounded-lg">
-
-                    <div class="px-6 py-5 font-semibold border-b border-gray-100">
-                        Liste des Conducteurs
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                                    <th class="px-4 py-3">Nom</th>
-                                    <th class="px-4 py-3">Email</th>
-                                    <th class="px-4 py-3">Téléphone</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y">
-                                
-                                <tr class="text-gray-700">
-                                    <td class="px-4 py-3">
-                                        Hussein Abbas
-                                    </td>
-                                    <td class="px-4 py-3">{{ Auth::user()->email }}</td>
-                                    <td class="px-4 py-3">0658478595</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-            <!-- Liste des Itinéraires -->
-            <section class="bg-white shadow rounded-lg">
-                <div class="px-6 py-5 font-semibold border-b border-gray-100">
-                    Liste des Itinéraires
-                </div>
-                <div class="overflow-x-auto">
-                
-                        <table class="w-full">
-                        <thead>
-                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                                <th class="px-4 py-3">Conducteur</th>
-                                <th class="px-4 py-3">Date</th>
-                                <th class="px-4 py-3">Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y">
-                            
-                            <tr class="text-gray-700">
-                                <td class="px-4 py-3">
-                                    Ahmed Hassan
-                                </td>
-                                <td class="px-4 py-3">27/02/2025</td>
-                                <td class="px-4 py-3">{{ Auth::user()->statut }}</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </section>
-            <!-- Derniers Colis -->
-            <section id="last-colis" class="bg-white shadow rounded-lg">
-                <div class="px-6 py-5 font-semibold border-b border-gray-100">
-                    Derniers Colis
+            <!-- Liste des Trajets -->
+            <section id="last-colis" class="bg-white shadow rounded-lg p-4">
+                <div class="px-6 py-5 text-xl text-gray-700 font-bold underline underline-offset-3 decoration-6 decoration-amber-200">
+                    Liste des Trajets
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead>
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
-                                <th class="px-4 py-3">Expéditeur</th>
+                                <th class="px-4 py-3">Passager</th>
                                 <th class="px-4 py-3">Destination</th>
-                                <th class="px-4 py-3">Volume</th>
-                                <th class="px-4 py-3">Poids</th>
+                                <th class="px-4 py-3">Lieu de Depart</th>
+                                <th class="px-4 py-3">Date de Depart</th>
+                                <th class="px-4 py-3">Date d'Arrivée</th>
                                 <th class="px-4 py-3">Statut</th>
-                                <th class="px-4 py-3">Date</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y">
+
+                            @foreach ( $trajets as $trajet)
+
+                            @php
+                            if ($trajet->statut === 'En preparation') {
+                                $bgClass = 'text-red-500';
+                            } elseif ($trajet->statut === 'En route') {
+                                $bgClass = 'text-blue-500';
+                            } elseif ($trajet->statut === 'Arrivee') {
+                                $bgClass = 'text-green-500';
+                            }
                             
-                            <tr class="text-gray-700">
-                                <td class="px-4 py-3">
-                                    Morad Rabeh
+                            @endphp
+
+                            <tr class="text-gray-700 font-semibold">
+                                <td class="px-4 py-3 font-bold text-lg">
+                                    {{ $trajet->passager->name}} {{ $trajet->passager->last_name}}
                                 </td>
-                                <td class="px-4 py-3">Casablanca</td>
-                                <td class="px-4 py-3">10 m³</td>
-                                <td class="px-4 py-3">2.5 kg</td>
-                                <td class="px-4 py-3">
-                                    <span class="px-2 py-1 font-semibold leading-tight rounded-full">
-                                    </span>
+                                <td class="px-4 py-3 text-green-500">{{ $trajet->lieuArrivee}}</td>
+                                <td class="px-4 py-3 text-blue-500">{{ $trajet->lieuDepart}}</td>
+                                <td class="px-4 py-3 text-amber-500">{{ \Carbon\Carbon::parse($trajet->dateDepart)->format('Y-m-d')}}</td>
+                                <td class="px-4 py-3 text-amber-500">
+                                    {{ \Carbon\Carbon::parse($trajet->dateArrivee)->format('Y-m-d')}}
                                 </td>
-                                <td class="px-4 py-3">26/02/2025</td>
+                                <td class="px-4 py-3 {{$bgClass}}">
+                                    {{ $trajet->statut}}
+                                </td>
                             </tr>
+                            @endforeach
                             
                         </tbody>
                     </table>
                 </div>
             </section>
+            
         </main>
     </div>
 
-    <!-- <script>
-      const colisStats = ;
-
-        const colisChart = new Chart(document.getElementById('colisChart'), {
-            type: 'pie', // Type de graphique (ex: bar, pie, line, etc.)
-            data: {
-                labels: ['En attente', 'En cours', 'Livrés'], // Légendes des données
-                datasets: [{
-                    label: 'Statistiques des colis',
-                    data: [colisStats.en_attente, colisStats.en_cours, colisStats.livres], // Données statistiques
-                    backgroundColor: ['#FF6384', '#36A2EB', '#4BC0C0'], // Couleurs pour les segments
-                }]
-            }
-        });
-
-        const usersStats = ;
-
-            const usersChart = new Chart(document.getElementById('usersChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['Conducteurs', 'Expéditeurs', 'Admins'], // Légendes
-                    datasets: [{
-                        label: 'Nombre d\'utilisateurs par rôle',
-                        data: [usersStats.conducteurs, usersStats.expediteurs, usersStats.admins], // Données
-                        backgroundColor: ['#FF9F40', '#FFCD56', '#4BC0C0'], // Couleurs
-                    }]
-                }
-            });
-
-        // Fetch Conducteurs
-        fetch('/Admin/conducteurs')
-            .then(response => response.json())
-            .then(data => {
-                const conducteursContainer = document.querySelector('.conducteurs-list');
-                data.forEach(conducteur => {
-                    const conducteurElement = document.createElement('div');
-                    conducteurElement.textContent = conducteur.name; // Adjust to your data structure
-                    conducteursContainer.appendChild(conducteurElement);
-                });
-            });
-
-        // Fetch Itinéraires
-        fetch('/Admin/itineraire')
-            .then(response => response.json())
-            .then(data => {
-                const itinerairesContainer = document.querySelector('.itineraire-list');
-                data.forEach(itineraire => {
-                    const itineraireElement = document.createElement('div');
-                    itineraireElement.textContent = itineraire.destination; // Adjust to your data structure
-                    itinerairesContainer.appendChild(itineraireElement);
-                });
-            });
-    </script> -->
 </body>
 </html>
