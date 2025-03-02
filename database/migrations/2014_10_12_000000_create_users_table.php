@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('last_name');
             $table->enum('role',['Chauffeur', 'Passager', 'Administrateur']);
             $table->string('email')->unique();
+            $table->string('telephone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('statut',['normal', 'verifiee', 'bannie'])->default('normal');
             $table->string('photo')->nullable();
+            $table->enum('etat',['Disponible', 'Indisponible'])->default('Disponible');
             $table->rememberToken();
             $table->timestamps();
         });
