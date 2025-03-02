@@ -33,14 +33,30 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'photo' => ['nullable', 'mimes:png,jpg,jpeg'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'telephone' => ['nullable', 'string', 'max:255'],
+            'role' => ['nullable', 'string', 'max:255'],
         ]);
+
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = public_path('uploads/');
+            $file->move($path, $filename);
+            $photoPath = 'uploads/' . $filename;
+        }
 
         $user = User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
+            'telephone' => $request->telephone,
             'role' => $request->role,
             'email' => $request->email,
+            'photo' =>$photoPath,
             'password' => Hash::make($request->password),
 
         ]);
