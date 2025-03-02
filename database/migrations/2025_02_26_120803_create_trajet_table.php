@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trajet', function (Blueprint $table) {
+        Schema::create('trajets', function (Blueprint $table) {
             $table->id();
             $table->timestamp('dateDepart');
             $table->timestamp('dateArrivee');
             $table->string('lieuDepart');
             $table->string('lieuArrivee');
             $table->enum('statut',['En preparation', 'En route', 'Arrivee'])->default('En preparation');
+            $table->enum('etat',['Accepte', 'En attente', 'Refuse'])->default('En attente');
+            $table->integer('nmbr_passagers')->nullable();
             $table->unsignedBigInteger('passager_id')->after('id'); 
             $table->unsignedBigInteger('chauffeur_id')->after('id'); 
             $table->foreign('passager_id')->references('id')->on('users')->onDelete('cascade');
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trajet');
+        Schema::dropIfExists('trajets');
     }
 };
